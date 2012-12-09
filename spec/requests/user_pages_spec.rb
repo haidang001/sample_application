@@ -36,6 +36,28 @@ describe "User pages" do
 			it "should create a user" do
 				expect { click_button submit }.to change(User, :count).by(1)
 			end
+
+			describe "after saving the user" do
+				before { click_button submit }
+				it { should have_link('Sign out') }
+			end
+		end
+
+		describe "after submission" do
+			before { click_button submit }
+
+			it { should have_selector('title', text: 'Sign up') }
+			it { should have_content('error') }
+		end
+
+		describe "with short password" do
+			before do
+				@user = User.new
+				@user.password = @user.password_confirmation = "12345"
+				click_button submit
+			end
+
+			it { should have_content('error') }
 		end
 	end
 end
