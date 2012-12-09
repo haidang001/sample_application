@@ -10,8 +10,10 @@
 	<body>
 		<%= render 'layouts/header' %>
 		<div class="container">
+			<% flash.each { |key, value| %> <div class="alert alert-<% key %>"><%= value %></div> <% } %>
 			<%= yield %>
 			<%= render 'layouts/footer' %>
+			<%= debug(params) if Rails.env.development? %>
 		</div>
 	</body>
 </html>
